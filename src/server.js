@@ -1,10 +1,11 @@
-require("dotenv");
-
+require("dotenv").config();
+const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const passport = require("passport");
-require("./src/config/auth")(passport);
+require("./config/auth")(passport);
+
 // Connect to database
 mongoose
   .connect("mongodb://localhost:27017/instagram-databases", {
@@ -28,9 +29,13 @@ app.use(cors(corsOptions));
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //Application routes
+const userRouter = require("./routes/user");
 
+app.use("/api", userRouter);
 // Listen to HTTP and WebSocket server
 const PORT = process.env.PORT || 8080;
 
