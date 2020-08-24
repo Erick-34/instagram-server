@@ -8,26 +8,29 @@ const userModel = mongoose.model("userModel");
 
 module.exports = (passport) => {
   passport.use(
-    new localStrategy({ usernameField: "email" }, (email, password, done) => {
-      userModel.findOne({ email: email }).then((user) => {
-        if (!user) {
-          return done(
-            null,
-            false,
-            {
-              message: "está conta não existe! crie uma conta",
-            },
-            bcrypt.compare(password, user.passworrd, (err, batem) => {
-              if (batem) {
-                return done(null, user);
-              } else {
-                return done(null, false, { message: "invalida!" });
-              }
-            })
-          );
-        }
-      });
-    })
+    new localStrategy(
+      { usernameField: "email", passwordField: "password" },
+      (email, password, done) => {
+        userModel.findOne({ email: email }).then((user) => {
+          if (!user) {
+            return done(
+              null,
+              false,
+              {
+                message: "está conta não existe! crie uma conta",
+              },
+              bcrypt.compare(password, user.passworrd, (err, batem) => {
+                if (batem) {
+                  return done(null, user);
+                } else {
+                  return done(null, false, { message: "Password invalido!" });
+                }
+              })
+            );
+          }
+        });
+      }
+    )
   );
 
   passport.serializeUser((user, done) => {
