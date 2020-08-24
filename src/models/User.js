@@ -36,4 +36,4 @@ const userModel = new Schema({
   messages: [{ type: Schema.Types.ObjectId, ref: "User" }],
 });
 
-module.exports = mongoose.model("userModel", userModel);
+module.exports = mongoose.model("user", userModel);

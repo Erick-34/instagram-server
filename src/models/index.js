@@ -2,7 +2,7 @@ const User = require("./User");
 const Post = require("./Post");
 const Like = require("./Like");
 const Follow = require("./Follow");
-const Comment = require("./Comment");
+const Comment = require("./Comments");
 const Notification = require("./Notification");
 const Message = require("./Message");
 
