@@ -3,7 +3,8 @@ require("dotenv");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const passport = require("passport");
+require("./src/config/auth")(passport);
 // Connect to database
 mongoose
   .connect("mongodb://localhost:27017/instagram-databases", {
@@ -24,6 +25,9 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //Application routes
 

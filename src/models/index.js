@@ -6,7 +6,7 @@ const Comment = require("./Comment");
 const Notification = require("./Notification");
 const Message = require("./Message");
 
-exports.modules = {
+module.exports = {
   User,
   Post,
   Like,
