@@ -5,6 +5,7 @@ const router = express.Router();
 router.post("/post/create", async (req, res) => {
   const { title, image } = req.body;
   const IdUser = req.session.currentUser._id;
+
   try {
     if (!title || !image) {
       res.status(400).json({
@@ -12,14 +13,9 @@ router.post("/post/create", async (req, res) => {
       });
     }
 
-    const imgUser = await User.findOne({ _id: IdUser }, { image });
-
-    console.log(imgUser);
-
     const response = await Post.create({
       title,
       image,
-      imagePublicId: imgUser,
       author: IdUser,
     });
 
