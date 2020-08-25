@@ -1,10 +1,9 @@
 require("dotenv").config();
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const passport = require("passport");
-require("./config/auth")(passport);
 
 // Connect to database
 mongoose
@@ -26,11 +25,12 @@ const corsOptions = {
 };
 
 app.use(cors(corsOptions));
-
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+
+// ADD SESSION SETTINGS HERE:
+require("./config/session")(app);
 
 //Application routes
 const userRouter = require("./routes/user");
