@@ -34,9 +34,12 @@ require("./config/session")(app);
 
 //Application routes
 const userRouter = require("./routes/user");
+const postRouter = require("./routes/post");
 
 app.use("/api", userRouter);
-// Listen to HTTP and WebSocket server
+app.use("/api", postRouter);
+
+//Listen to HTTP
 const PORT = process.env.PORT || 8080;
 
 app.listen({ port: PORT }, () => {

@@ -30,6 +30,7 @@ router.post("/signup", (req, res, next) => {
         email,
         username: username,
         password: hashedPassword,
+        image: "https:localhsodods",
       });
     })
     .then((userFromDB) => {
@@ -61,7 +62,7 @@ router.post("/login", async (req, res, next) => {
       }
 
       bcryptjs
-        .compare(password, user.passwordHash)
+        .compare(password, user.password)
         .then((success) => {
           if (success) {
             req.session.currentUser = user;
