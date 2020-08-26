@@ -17,12 +17,12 @@ router.post("/follow", async (req, res) => {
     { $push: { following: response.follower } }
   );
 
-  res.status(200).json(Following);
+  res.status(200).json({ success: true, data: Following });
 });
 
 router.get("/followers", async (req, res) => {
   const responseFollowers = await User.findOne({ _id: idUser });
-  res.status(200).json(responseFollowers.followers);
+  res.status(200).json({ success: true, data: responseFollowers.followers });
 });
 
 module.exports = router;

@@ -31,11 +31,8 @@ router.post("/post/create", async (req, res) => {
 });
 
 router.get("/posts", async (req, res) => {
-  const posts = await Post.find();
-  res.status(200).json({
-    success: true,
-    data: posts,
-  });
+  const post = await Post.find();
+  res.status(200).json({ success: true, data: post });
 });
 
 module.exports = router;
