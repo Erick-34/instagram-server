@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const express = require("express");
@@ -7,7 +8,7 @@ const cors = require("cors");
 
 // Connect to database
 mongoose
-  .connect("mongodb://localhost:27017/instagram-databases", {
+  .connect(process.env.MONGO_URL, {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
