@@ -21,10 +21,10 @@ router.post("/post/create", async (req, res) => {
 
     await User.updateOne(
       { _id: req.session.currentUser._id },
-      { $push: { posts: response._id } }
-    );
+      { $push: { posts: response } }
+    ).populate("Post");
 
-    res.status(201).json({ ...response });
+    res.status(201).json({ success: true, data: response });
   } catch (err) {
     console.log(`Error while creating a new  post ${err}`);
   }
