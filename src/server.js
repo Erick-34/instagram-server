@@ -8,7 +8,7 @@ const cors = require("cors");
 
 // Connect to database
 mongoose
-  .connect(process.env.MONGO_URL, {
+  .connect("mongodb://localhost:27017/instagram-databases", {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true,
@@ -36,9 +36,13 @@ require("./config/session")(app);
 //Application routes
 const userRouter = require("./routes/user");
 const postRouter = require("./routes/post");
+const commentRouter = require("./routes/comment");
+const likeRouter = require("./routes/like");
 
 app.use("/api", userRouter);
 app.use("/api", postRouter);
+app.use("/api", commentRouter);
+app.use("/api", likeRouter);
 
 //Listen to HTTP
 const PORT = process.env.PORT || 8080;
