@@ -1,4 +1,4 @@
-const { User } = require("../models/index");
+const { User, Post } = require("../models/index");
 const bcryptjs = require("bcryptjs");
 const express = require("express");
 const router = express.Router();
@@ -70,6 +70,9 @@ router.post("/login", async (req, res, next) => {
           }
           res.json({ errorMessage: "Incorrect password." });
         })
+        .then(() => {
+          User.updateOne({ _id: user }, { $push: { isOnline: true } });
+        })
         .catch((err) => {
           throw new Error(err);
         });
@@ -77,12 +80,24 @@ router.post("/login", async (req, res, next) => {
     .catch((error) => next(error));
 });
 
-router.get("/profile", (req, res) => {});
+router.get("/profile", async (req, res) => {
+  const idUser = req.session.currentUser;
+
+  const resposePosts = await Post.find({ author: idUser }).populate("User");
+
+  res.status(200).json({ success: true, data: resposePosts });
+});
 
 //Logout
-router.post("/logout", (req, res) => {
+router.post("/logout", async (req, res) => {
+  const response = await User.updateOne(
+    { _id: req.session.currentUser },
+    { $push: { isOnline: false } }
+  );
+
   req.session.destroy();
-  res.status(200).json({ message: "Loggout success" });
+
+  res.status(200).json({ message: "Loggout success", res: response });
 });
 
 module.exports = router;
